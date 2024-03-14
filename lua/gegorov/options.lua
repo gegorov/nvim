@@ -43,3 +43,17 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+--Enable spell check
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+
+-- Sets how neovim will display certain whitespace in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = {
+    tab = '» ',
+    nbsp = '␣',
+    trail = '·',
+}
