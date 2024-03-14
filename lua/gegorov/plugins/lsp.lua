@@ -6,7 +6,7 @@ return {
 	},
 	automatic_installation = true,
 	config = function()
-		require("mason").setup()
+		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = { "lua_ls", "cssls", "cssmodules_ls", "html", "tsserver", "biome", "yamlls", "jsonls" },
 			handlers = {
