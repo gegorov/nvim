@@ -11,7 +11,6 @@ return {
 			ensure_installed = { "lua_ls", "cssls", "cssmodules_ls", "html", "tsserver", "biome", "yamlls", "jsonls" },
 			handlers = {
 				function(server_name)
-					print("setting up ", server_name)
 					require("lspconfig")[server_name].setup({})
 				end,
 				["lua_ls"] = function()
