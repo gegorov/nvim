@@ -6,6 +6,9 @@ vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = "80"
+
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = false
