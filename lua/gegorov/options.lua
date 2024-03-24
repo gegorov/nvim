@@ -60,3 +60,10 @@ vim.opt.listchars = {
     nbsp = '␣',
     trail = '·',
 }
+
+-- set tmux colors
+if vim.fn.has("termguicolors") == 1 then
+  vim.opt.termguicolors = true
+end
+
+
