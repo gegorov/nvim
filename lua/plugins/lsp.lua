@@ -16,9 +16,17 @@ return {
             })
         end,
     },
+    -- Useful status updates for LSP.
+    -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+    { 'j-hui/fidget.nvim', opts = {} },
+
+    -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- used for completion, annotations and signatures of Neovim apis
+    { 'folke/neodev.nvim', opts = {} },
     {
         "neovim/nvim-lspconfig",
         config = function()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
 
             lspconfig.lua_ls.setup({
@@ -29,10 +37,15 @@ return {
                         },
                     },
                 },
+                capabilities = capabilities,
             })
 
-            lspconfig.biome.setup({})
-            lspconfig.tsserver.setup({})
+            lspconfig.biome.setup({
+                capabilities = capabilities,
+            })
+            lspconfig.tsserver.setup({
+                capabilities = capabilities,
+            })
 
             vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show info on hover" })
 
