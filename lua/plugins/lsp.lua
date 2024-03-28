@@ -13,6 +13,7 @@ return {
         config = function()
             require("mason-lspconfig").setup({
                 ensure_installed = { "lua_ls", "biome", "tsserver", "html", "cssls", "cssmodules_ls" },
+                automatic_inallation = true,
             })
         end,
     },
@@ -25,6 +26,14 @@ return {
     { "folke/neodev.nvim", opts = {} },
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            {
+                "antosha417/nvim-lsp-file-operations",
+                config = true,
+            },
+        },
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
@@ -78,8 +87,8 @@ return {
                         { desc = "show Type [D]efentition", buffer = ev.buf }
                     )
                     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "rename", buffer = ev.buf })
-                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-                    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ctions", buffer = ev.buf })
+                    vim.keymap.set('n', 'gr', "<cmd>Telescope lsp_references<CR>", { desc = "[g]o [r]eferences", buffer = ev.buf })
                     vim.keymap.set("n", "<leader>F", function()
                         vim.lsp.buf.format({ async = true })
                     end, { desc = "[F]ormat", buffer = ev.buf })
