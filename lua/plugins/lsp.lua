@@ -37,6 +37,7 @@ return {
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
+            local util = require("lspconfig.util")
 
             lspconfig.lua_ls.setup({
                 settings = {
@@ -51,6 +52,12 @@ return {
 
             lspconfig.biome.setup({
                 capabilities = capabilities,
+                root_dir = function(fname)
+                    return util.root_pattern("biome.json", "biome.jsonc")(fname)
+                        or util.find_package_json_ancestor(fname)
+                        or util.find_node_modules_ancestor(fname)
+                        or util.find_git_ancestor(fname)
+                end,
             })
             lspconfig.tsserver.setup({
                 capabilities = capabilities,
@@ -87,8 +94,18 @@ return {
                         { desc = "show Type [D]efentition", buffer = ev.buf }
                     )
                     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "rename", buffer = ev.buf })
-                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ctions", buffer = ev.buf })
-                    vim.keymap.set('n', 'gr', "<cmd>Telescope lsp_references<CR>", { desc = "[g]o [r]eferences", buffer = ev.buf })
+                    vim.keymap.set(
+                        { "n", "v" },
+                        "<leader>ca",
+                        vim.lsp.buf.code_action,
+                        { desc = "[c]ode [a]ctions", buffer = ev.buf }
+                    )
+                    vim.keymap.set(
+                        "n",
+                        "gr",
+                        "<cmd>Telescope lsp_references<CR>",
+                        { desc = "[g]o [r]eferences", buffer = ev.buf }
+                    )
                     vim.keymap.set("n", "<leader>F", function()
                         vim.lsp.buf.format({ async = true })
                     end, { desc = "[F]ormat", buffer = ev.buf })
